@@ -1,26 +1,26 @@
 # codex-up
 
-**Codex latest main build, full access, pre-configured — in one command.**  
-Dead-simple updater/installer for the Codex CLI (Rust). It installs prerequisites, builds from **`main`**, drops `codex` on your `$PATH`, and writes a **YOLO** config: full access, no prompts, warning hidden.
+Build and install Codex from `main` with a preconfigured local setup.  
+A small installer for the Codex CLI (Rust). It installs prerequisites, builds from the tip of **`main`**, adds `codex` to your `$PATH`, and can write a permissive local config (no approval prompts, unsandboxed).
 
 Upstream (original repo): https://github.com/openai/codex
 
-- Tracks **`main`** by default (latest commit)  
+- Tracks **`main`** by default (tip-of-`main`)  
 - **Pin any release** with a tag (e.g. `0.47.0` or `rust-v0.47.0`)  
 - Always available as **`codex`** (installed to `~/.local/bin/codex`)  
 - Works on **macOS** and **Linux**; auto-installs `git`, `curl`, **Rust**, and `ripgrep` if missing  
-- **Pre-configured** for unsandboxed mode (see “Defaults” below)
+- Defaults to a permissive, unsandboxed mode (changeable; see “Defaults”).
 
 ## What This Is
 
-- Tiny, auditable wrapper to build and install the upstream OpenAI Codex CLI from source.
-- Always tracks latest `main` by default; supports pinning to tagged releases.
-- Ships opinionated defaults for maximum local capability (unsandboxed, no prompts).
+- Simple, auditable wrapper to build and install the upstream OpenAI Codex CLI from source.
+- Tracks `main` by default (tip-of-`main`); supports pinning to tagged releases.
+- Offers optional permissive defaults for local development (unsandboxed, no approval prompts).
 - Not a fork, not a replacement UI — just an installer and config bootstrap.
 
 ## Who This Is For
 
-- Builders who want the newest Codex CLI in minutes.
+- Builders who want the current Codex CLI from `main` quickly.
 - Power users comfortable with unsandboxed, no-approval workflows.
 - Researchers, plugin/tool authors, and maintainers testing against `main` or specific tags.
 - Teams using ephemeral/dev machines where a fast, reproducible setup is useful.
@@ -28,32 +28,32 @@ Upstream (original repo): https://github.com/openai/codex
 ## What To Know
 
 - Upstream lives at `openai/codex` (linked above); this project is unaffiliated and focuses solely on build/setup.
-- Defaults are YOLO: `approval_policy = "never"`, `sandbox_mode = "danger-full-access"` (change these if you need guardrails).
+- Defaults are permissive: `approval_policy = "never"`, `sandbox_mode = "danger-full-access"` (change these if you need guardrails).
 - Installs `codex` to `~/.local/bin/codex` and clones the source to `~/src/openai-codex` by default.
 - macOS and Linux supported; common package managers auto-detected for prerequisites.
 
 ## Quick start
 
-> Replace `YOURUSER/REPO` after you push this repo.
+Install from this repo:
 
 ```bash
 # install the updater
 mkdir -p ~/.local/bin
-curl -fsSL https://raw.githubusercontent.com/YOURUSER/REPO/main/codex-up -o ~/.local/bin/codex-up
+curl -fsSL https://raw.githubusercontent.com/hweihwang/codex-up/main/codex-up -o ~/.local/bin/codex-up
 chmod +x ~/.local/bin/codex-up
 
 # ensure ~/.local/bin is on your PATH (bash example)
 grep -q 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 . ~/.bashrc
 
-# build & install the latest Codex from main + write YOLO defaults
+# build & install Codex from main (tip-of-main) + write permissive defaults
 codex-up
 ```
 
 ## Usage
 
 ```bash
-codex-up               # build from latest main
+codex-up               # build from main (tip-of-main)
 codex-up main          # same as above
 codex-up 0.47.0        # build a specific release (auto-normalizes to rust-v0.47.0)
 codex-up rust-v0.47.0  # explicit tag
@@ -76,7 +76,7 @@ which -a codex
 
 > Package managers supported for deps (best-effort): `brew`, `apt-get`, `dnf`, `pacman`. If none are available, the script prints what to install manually.
 
-## Defaults (YOLO mode)
+## Defaults
 
 The script writes this to `~/.codex/config.toml`:
 
@@ -90,7 +90,7 @@ sandbox_mode = "danger-full-access"
 hide_full_access_warning = true
 ```
 
-**Translation:** latest model, high reasoning, **no approval prompts**, **unsandboxed full access**, and the UI warning is hidden.  
+Summary: model as below, high reasoning, no approval prompts, unsandboxed full access, and the UI warning is hidden.  
 Don’t like these defaults? Edit the file or run with `SKIP_CONFIG=1` to preserve your own.
 
 ## Customize (optional)
@@ -134,9 +134,9 @@ rm -rf ~/src/openai-codex
 # Optional: restore your previous config backup in ~/.codex/
 ```
 
-## Security notes (read this)
+## Security notes (please read)
 
-You asked for **YOLO**: `danger-full-access` means **unrestricted file, process, and network access** with **no prompts**. Use on disposable/dev machines, VMs, or containers. If you need guardrails, change to:
+If you keep the defaults, `danger-full-access` means unrestricted file, process, and network access with no prompts. Prefer using this on disposable/dev machines, VMs, or containers. If you need guardrails, change to:
 
 ```toml
 approval_policy = "on-request"
