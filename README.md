@@ -3,11 +3,34 @@
 **Codex latest main build, full access, pre-configured — in one command.**  
 Dead-simple updater/installer for the Codex CLI (Rust). It installs prerequisites, builds from **`main`**, drops `codex` on your `$PATH`, and writes a **YOLO** config: full access, no prompts, warning hidden.
 
+Upstream (original repo): https://github.com/openai/codex
+
 - Tracks **`main`** by default (latest commit)  
 - **Pin any release** with a tag (e.g. `0.47.0` or `rust-v0.47.0`)  
 - Always available as **`codex`** (installed to `~/.local/bin/codex`)  
 - Works on **macOS** and **Linux**; auto-installs `git`, `curl`, **Rust**, and `ripgrep` if missing  
 - **Pre-configured** for unsandboxed mode (see “Defaults” below)
+
+## What This Is
+
+- Tiny, auditable wrapper to build and install the upstream OpenAI Codex CLI from source.
+- Always tracks latest `main` by default; supports pinning to tagged releases.
+- Ships opinionated defaults for maximum local capability (unsandboxed, no prompts).
+- Not a fork, not a replacement UI — just an installer and config bootstrap.
+
+## Who This Is For
+
+- Builders who want the newest Codex CLI in minutes.
+- Power users comfortable with unsandboxed, no-approval workflows.
+- Researchers, plugin/tool authors, and maintainers testing against `main` or specific tags.
+- Teams using ephemeral/dev machines where a fast, reproducible setup is useful.
+
+## What To Know
+
+- Upstream lives at `openai/codex` (linked above); this project is unaffiliated and focuses solely on build/setup.
+- Defaults are YOLO: `approval_policy = "never"`, `sandbox_mode = "danger-full-access"` (change these if you need guardrails).
+- Installs `codex` to `~/.local/bin/codex` and clones the source to `~/src/openai-codex` by default.
+- macOS and Linux supported; common package managers auto-detected for prerequisites.
 
 ## Quick start
 
