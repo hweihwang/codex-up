@@ -7,6 +7,7 @@ set -euo pipefail
 #   codex-up main         # same as above
 #   codex-up 0.47.0       # build a specific release (auto-normalizes to rust-v0.47.0)
 #   codex-up rust-v0.47.0 # explicit tag
+# First run copies this helper to $BIN_DIR (default ~/.local/bin) so codex-up is available anywhere.
 #
 # Env:
 #   REPO_DIR    (default: $HOME/src/openai-codex)
@@ -22,6 +23,12 @@ BUILD_DIR="$REPO_DIR/codex-rs"
 BIN_DIR="${BIN_DIR:-$HOME/.local/bin}"
 CONFIG_DIR="${CONFIG_DIR:-$HOME/.codex}"
 CONFIG_FILE="$CONFIG_DIR/config.toml"
+SCRIPT_NAME="codex-up"
+SCRIPT_TARGET="$BIN_DIR/$SCRIPT_NAME"
+SCRIPT_SOURCE="${BASH_SOURCE[0]:-$0}"
+if [ "${SCRIPT_SOURCE#/}" = "$SCRIPT_SOURCE" ]; then
+  SCRIPT_SOURCE="$(cd "$(dirname "$SCRIPT_SOURCE")" && pwd)/$(basename "$SCRIPT_SOURCE")"
+fi
 
 have() { command -v "$1" >/dev/null 2>&1; }
 
@@ -48,6 +55,14 @@ if ! have cargo; then
 fi
 
 mkdir -p "$BIN_DIR" "$(dirname "$REPO_DIR")"
+
+if [ -f "$SCRIPT_SOURCE" ] && [ "$SCRIPT_SOURCE" != "$SCRIPT_TARGET" ]; then
+  if install -m 0755 "$SCRIPT_SOURCE" "$SCRIPT_TARGET"; then
+    echo ">> Installed codex-up helper to $SCRIPT_TARGET"
+  else
+    echo ">> Warning: unable to install codex-up helper to $SCRIPT_TARGET (continuing)" >&2
+  fi
+fi
 
 if [ ! -d "$REPO_DIR/.git" ]; then
   echo ">> Cloning $REPO_URL to $REPO_DIR"

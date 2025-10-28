@@ -39,7 +39,7 @@ Install from this repo:
 ```bash
 # install the updater
 mkdir -p ~/.local/bin
-curl -fsSL https://raw.githubusercontent.com/hweihwang/codex-up/main/codex-up -o ~/.local/bin/codex-up
+curl -fsSL https://raw.githubusercontent.com/hweihwang/codex-up/main/install.sh -o ~/.local/bin/codex-up
 chmod +x ~/.local/bin/codex-up
 
 # ensure ~/.local/bin is on your PATH (bash example)
@@ -49,6 +49,8 @@ grep -q 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc || echo 'export PATH="$
 # build & install Codex from main (tip-of-main) + write permissive defaults
 codex-up
 ```
+
+Cloned the repo already? Run `./install.sh` once; it copies itself into `~/.local/bin/codex-up` so the command is available everywhere.
 
 ## Usage
 
