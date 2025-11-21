@@ -44,12 +44,3 @@ npm uninstall -g codex-up
 rm -f ~/.local/bin/codex ~/.local/bin/codex-up
 rm -rf ~/src/openai-codex
 ```
-
-## Security
-
-codex-up does not write configs. Set `~/.codex/config.toml` to whatever guardrails you want, e.g.:
-
-```toml
-approval_policy = "on-request"
-sandbox_mode = "workspace-write"
-```
