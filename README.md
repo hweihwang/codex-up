@@ -30,7 +30,7 @@ The GitHub Release also contains a [DotSlash](https://dotslash-cli.com/) file fo
 - Simple, auditable wrapper to build and install the upstream OpenAI Codex CLI from source.
 - Tracks `main` by default (tip-of-`main`); supports pinning to tagged releases.
 - Offers optional permissive defaults for local development (unsandboxed, no approval prompts).
-- Not a fork, not a replacement UI — just an installer and config bootstrap.
+- Not a fork, not a replacement UI ,  just an installer and config bootstrap.
 
 ## Who This Is For
 
@@ -108,10 +108,10 @@ Don’t like these defaults? Edit the file or run with `SKIP_CONFIG=1` to preser
 
 Environment variables:
 
-- `REPO_DIR` — where to keep the clone (default: `~/src/openai-codex`)  
-- `BIN_DIR` — where to install the `codex` binary (default: `~/.local/bin`)  
-- `CONFIG_DIR` — where to write config (default: `~/.codex`)  
-- `SKIP_CONFIG=1` — skip creating/updating `config.toml`
+- `REPO_DIR` ,  where to keep the clone (default: `~/src/openai-codex`)  
+- `BIN_DIR` ,  where to install the `codex` binary (default: `~/.local/bin`)  
+- `CONFIG_DIR` ,  where to write config (default: `~/.codex`)  
+- `SKIP_CONFIG=1` ,  skip creating/updating `config.toml`
 
 Examples:
 
@@ -123,17 +123,17 @@ SKIP_CONFIG=1 codex-up 0.47.0
 
 ## Troubleshooting
 
-**`codex: command not found`** — Ensure `~/.local/bin` is on your `$PATH` and re-open your shell.  
-**Wrong `codex` picked when you also used Homebrew or npm** — Put `~/.local/bin` before other paths:
+**`codex: command not found`** ,  Ensure `~/.local/bin` is on your `$PATH` and re-open your shell.  
+**Wrong `codex` picked when you also used Homebrew or npm** ,  Put `~/.local/bin` before other paths:
 
 ```bash
 which -a codex
 hash -r   # clear shell command cache
 ```
 
-**`codex-up: command not found`** — Ensure your npm global bin is on `PATH` (`npm config get prefix` then append `/bin`), or run `npx codex-up <target>`.
+**`codex-up: command not found`** ,  Ensure your npm global bin is on `PATH` (`npm config get prefix` then append `/bin`), or run `npx codex-up <target>`.
 
-**macOS toolchain issues** — Install Xcode Command Line Tools once:
+**macOS toolchain issues** ,  Install Xcode Command Line Tools once:
 
 ```bash
 xcode-select --install

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# codex-up — build/install Codex CLI from source and set defaults
+# codex-up ,  build/install Codex CLI from source and set defaults
 # Usage:
 #   codex-up              # build from main (tip-of-main)
 #   codex-up main         # same as above
