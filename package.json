@@ -1,6 +1,6 @@
 {
   "name": "codex-up",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Install OpenAI Codex CLI from source (no config changes).",
   "bin": {
     "codex-up": "bin/codex-up.js"
@@ -16,7 +16,10 @@
     "installer",
     "openai"
   ],
-  "repository": "https://github.com/hweihwang/codex-up",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hweihwang/codex-up.git"
+  },
   "bugs": "https://github.com/hweihwang/codex-up/issues",
   "homepage": "https://github.com/hweihwang/codex-up#readme",
   "license": "MIT",
