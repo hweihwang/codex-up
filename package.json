@@ -1,6 +1,6 @@
 {
   "name": "codex-up",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Install OpenAI Codex CLI from source (no config changes).",
   "bin": {
     "codex-up": "bin/codex-up.js"

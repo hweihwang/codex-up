@@ -10,13 +10,13 @@ set -euo pipefail
 # First run copies this helper to $BIN_DIR (default ~/.local/bin) so codex-up is available anywhere.
 #
 # Env:
-#   REPO_DIR    (default: $HOME/src/openai-codex)
+#   REPO_DIR    (default: $HOME/Projects/openai-codex)
 #   BIN_DIR     (default: $HOME/.local/bin)
 
 TARGET="${1:-main}"
 
 REPO_URL="https://github.com/openai/codex"
-REPO_DIR="${REPO_DIR:-$HOME/src/openai-codex}"
+REPO_DIR="${REPO_DIR:-$HOME/Projects/openai-codex}"
 BUILD_DIR="$REPO_DIR/codex-rs"
 BIN_DIR="${BIN_DIR:-$HOME/.local/bin}"
 SCRIPT_NAME="codex-up"
@@ -92,9 +92,26 @@ echo ">> Installing binary to $BIN_DIR/codex"
 install -m 0755 "target/release/codex" "$BIN_DIR/codex"
 
 # PATH hint
+SHELL_NAME="${SHELL##*/}"
+SHELL_NAME="${SHELL_NAME:-sh}"
 if ! echo ":$PATH:" | grep -q ":$BIN_DIR:"; then
-  echo ">> Heads up: add $BIN_DIR to your PATH, e.g.:"
-  echo "   echo 'export PATH=\"$BIN_DIR:\\$PATH\"' >> ~/.bashrc && . ~/.bashrc"
+  echo ">> Heads up: add $BIN_DIR to your PATH:"
+  case "$SHELL_NAME" in
+    zsh)
+      echo "   echo 'export PATH=\"$BIN_DIR:\\$PATH\"' >> ~/.zprofile"
+      echo "   source ~/.zprofile"
+      ;;
+    bash)
+      echo "   echo 'export PATH=\"$BIN_DIR:\\$PATH\"' >> ~/.bashrc"
+      echo "   source ~/.bashrc"
+      ;;
+    fish)
+      echo "   set -U fish_user_paths $BIN_DIR \\$fish_user_paths"
+      ;;
+    *)
+      echo "   export PATH=\"$BIN_DIR:\\$PATH\""
+      ;;
+  esac
 fi
 
 echo ">> Done. codex at: $(command -v codex || echo "$BIN_DIR/codex")"

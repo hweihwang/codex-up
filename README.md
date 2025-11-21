@@ -15,7 +15,7 @@ codex --version
 ## What it does
 
 - Installs deps if missing: git, curl, ripgrep, rustup (macOS + Linux).
-- Clones/updates `https://github.com/openai/codex` in `~/src/openai-codex`.
+- Clones/updates `https://github.com/openai/codex` in `~/Projects/openai-codex`.
 - Builds `codex-rs` with `cargo build --release`; installs to `~/.local/bin/codex`.
 
 ## Options
@@ -32,7 +32,7 @@ codex --version
 
 ## Troubleshooting
 
-- `codex` missing: ensure `~/.local/bin` is on PATH; restart shell.
+- `codex` missing: ensure `~/.local/bin` is on PATH; restart shell. Bash: `echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc`. Zsh: `echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zprofile && source ~/.zprofile`. Fish: `set -U fish_user_paths ~/.local/bin $fish_user_paths`.
 - Picking another `codex`: put `~/.local/bin` first; `which -a codex`.
 - macOS build issues: `xcode-select --install`.
 
@@ -41,5 +41,5 @@ codex --version
 ```bash
 npm uninstall -g codex-up
 rm -f ~/.local/bin/codex ~/.local/bin/codex-up
-rm -rf ~/src/openai-codex
+rm -rf ~/Projects/openai-codex
 ```
