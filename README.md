@@ -1,6 +1,6 @@
 # codex-up
 
-Build and install the OpenAI Codex CLI from `openai/codex` (tip of `main` or any tag). Leaves your `~/.codex/config.toml` alone.
+Build and install the OpenAI Codex CLI from `openai/codex` (tip of `main` or any tag).
 
 ## Quick install
 
@@ -17,7 +17,6 @@ codex --version
 - Installs deps if missing: git, curl, ripgrep, rustup (macOS + Linux).
 - Clones/updates `https://github.com/openai/codex` in `~/src/openai-codex`.
 - Builds `codex-rs` with `cargo build --release`; installs to `~/.local/bin/codex`.
-- Leaves `~/.codex/config.toml` untouched; configure Codex yourself.
 
 ## Options
 
