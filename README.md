@@ -10,6 +10,20 @@ Upstream (original repo): https://github.com/openai/codex
 - Always available as **`codex`** (installed to `~/.local/bin/codex`)  
 - Works on **macOS** and **Linux**; auto-installs `git`, `curl`, **Rust**, and `ripgrep` if missing  
 - Defaults to a permissive, unsandboxed mode (changeable; see “Defaults”).
+- Installable via npm (`npm i -g codex-up` or `npx codex-up`); no curl pipeline needed.
+
+### System requirements
+
+| Requirement                 | Details                                                          |
+| --------------------------- | ---------------------------------------------------------------- |
+| Operating systems           | macOS 12+, Ubuntu 20.04+/Debian 10+, or Windows 11 **via WSL2**  |
+| Git (optional, recommended) | 2.23+ for built-in PR helpers                                    |
+| Node.js (npm install)       | 14+ to run `npm i -g codex-up` / `npx codex-up`                  |
+| RAM                         | 4-GB minimum (8-GB recommended)                                  |
+
+### DotSlash
+
+The GitHub Release also contains a [DotSlash](https://dotslash-cli.com/) file for the Codex CLI named `codex`. Using a DotSlash file makes it possible to make a lightweight commit to source control to ensure all contributors use the same version of an executable, regardless of what platform they use for development.
 
 ## What This Is
 
@@ -34,23 +48,14 @@ Upstream (original repo): https://github.com/openai/codex
 
 ## Quick start
 
-Install from this repo:
+Install via npm (global or one-off):
 
 ```bash
-# install the updater
-mkdir -p ~/.local/bin
-curl -fsSL https://raw.githubusercontent.com/hweihwang/codex-up/main/install.sh -o ~/.local/bin/codex-up
-chmod +x ~/.local/bin/codex-up
-
-# ensure ~/.local/bin is on your PATH (bash example)
-grep -q 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-. ~/.bashrc
-
-# build & install Codex from main (tip-of-main) + write permissive defaults
-codex-up
+npm i -g codex-up   # global install
+codex-up            # build from main (tip-of-main)
+# or:
+npx codex-up 0.47.0 # build a tagged release
 ```
-
-Cloned the repo already? Run `./install.sh` once; it copies itself into `~/.local/bin/codex-up` so the command is available everywhere.
 
 ## Usage
 
@@ -59,11 +64,15 @@ codex-up               # build from main (tip-of-main)
 codex-up main          # same as above
 codex-up 0.47.0        # build a specific release (auto-normalizes to rust-v0.47.0)
 codex-up rust-v0.47.0  # explicit tag
+codex-up 1a2b3c4d      # build from a specific commit (any reachable SHA)
+codex-up my-branch     # build a branch (any git ref works)
 
 # verify
 codex --version
 which -a codex
 ```
+
+Targets can be any git ref (branch, tag, or commit SHA). Pure version numbers are normalized to `rust-v<version>`.
 
 **Upgrade:** just run `codex-up` again.  
 **Switch versions:** run `codex-up <tag>` (e.g. `0.47.0`), then `codex-up main` to go back.
@@ -122,6 +131,8 @@ which -a codex
 hash -r   # clear shell command cache
 ```
 
+**`codex-up: command not found`** — Ensure your npm global bin is on `PATH` (`npm config get prefix` then append `/bin`), or run `npx codex-up <target>`.
+
 **macOS toolchain issues** — Install Xcode Command Line Tools once:
 
 ```bash
@@ -131,6 +142,7 @@ xcode-select --install
 ## Uninstall
 
 ```bash
+npm uninstall -g codex-up
 rm -f ~/.local/bin/codex ~/.local/bin/codex-up
 rm -rf ~/src/openai-codex
 # Optional: restore your previous config backup in ~/.codex/

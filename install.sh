@@ -52,6 +52,8 @@ if ! have cargo; then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   # shellcheck disable=SC1091
   . "$HOME/.cargo/env"
+  rustup component add rustfmt
+  rustup component add clippy
 fi
 
 mkdir -p "$BIN_DIR" "$(dirname "$REPO_DIR")"
